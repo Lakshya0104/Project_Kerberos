@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PROJECT KERBEROS — Round 3 · Future Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ctext y='50' font-size='52'%3E%F0%9F%83%8F%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="cerberus" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 6 L20 14 L20 26 Q20 34 32 40 Q44 34 44 26 L44 14 Z"/>
+      <path d="M14 20 L8 26 L8 34 Q8 40 14 44"/>
+      <path d="M50 20 L56 26 L56 34 Q56 40 50 44"/>
+      <path d="M32 40 L32 52"/>
+      <path d="M24 52 L40 52"/>
+      <circle cx="27" cy="22" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="37" cy="22" r="1.8" fill="currentColor" stroke="none"/>
+    </g>
+  </symbol>
+</svg>
+
+<div class="topbar">
+  <div class="wrap">
+    <div class="brand">
+      <svg class="cerb" style="color:var(--amber)"><use href="#cerberus"/></svg>
+      <span>PROJECT <span class="k">KERBEROS</span></span>
+    </div>
+    <span class="clock">ROUND <b>03</b> · FUTURE CARD · HOUR <b>12</b></span>
+    <div class="spacer"></div>
+    <button class="tbtn" id="btn-roster">Assignments <span id="roster-count">0/35</span></button>
+  </div>
+</div>
+
+<!-- ============ HOME ============ -->
+<main id="view-home">
+  <section class="hero">
+    <div class="wrap">
+      <div class="round">// ROUND 03 — THE THIRD ACT</div>
+      <h1>FUTURE CARD</h1>
+      <h2>The Twist Nobody Prepared For</h2>
+      <p class="lead">
+        Twelve hours in, the brief changes. Every team draws a Future Card bound to the problem
+        statement they chose — a twist that rewrites what their system has to survive, with no
+        warning and no preparation. Pick a domain. Pick a problem. Draw.
+      </p>
+      <div class="meta">
+        <div>DOMAINS<b>03</b></div>
+        <div>PROBLEM STATEMENTS<b>09</b></div>
+        <div>FUTURE CARDS<b>27</b></div>
+        <div>TEAMS<b>35</b></div>
+      </div>
+    </div>
+  </section>
+  <div class="wrap" id="domains"></div>
+</main>
+
+<!-- ============ PS DETAIL ============ -->
+<main id="view-ps" class="hidden">
+  <div class="wrap">
+    <button class="back" id="btn-back">&lsaquo;&lsaquo; Back to all problem statements</button>
+
+    <div class="ps-hero">
+      <div class="eyebrow" id="ps-eyebrow"></div>
+      <h2 id="ps-title"></h2>
+    </div>
+
+    <div class="brief">
+      <div class="blk">
+        <h4>The Scenario</h4>
+        <p id="ps-scenario"></p>
+      </div>
+      <div class="blk stack">
+        <div>
+          <h4>Build the MVP</h4>
+          <p id="ps-mvp"></p>
+        </div>
+        <div>
+          <h4>Secure It</h4>
+          <p id="ps-secure"></p>
+        </div>
+      </div>
+    </div>
+    <div class="quote" id="ps-quote"></div>
+
+    <section class="deck-sec">
+      <div class="deck-head">
+        <h3>// FUTURE CARD DECK</h3>
+        <div class="ln"></div>
+        <span class="mono-label" id="deck-id"></span>
+      </div>
+      <p class="deck-note">Three sealed twists for this problem statement. Select a team, shuffle, and the deck deals one.</p>
+
+      <div class="console">
+        <div class="field">
+          <label for="team-select">Team</label>
+          <select id="team-select"></select>
+        </div>
+        <div class="checkline">
+          <input type="checkbox" id="hide-assigned" checked>
+          <label for="hide-assigned" style="letter-spacing:.14em">HIDE ALREADY-ASSIGNED TEAMS</label>
+        </div>
+        <button class="btn" id="btn-shuffle">Shuffle &amp; Deal</button>
+        <button class="btn ghost" id="btn-reveal">Reveal All</button>
+      </div>
+
+      <div class="cards" id="cards"></div>
+
+      <div class="verdict" id="verdict">
+        <span class="vl">ASSIGNED</span>
+        <span class="vteam" id="v-team"></span>
+        <span class="arrow">&rarr;</span>
+        <span class="vcard" id="v-card"></span>
+        <span class="vl" id="v-ps"></span>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- ============ ROSTER ============ -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h3>// ASSIGNMENT LEDGER</h3>
+      <span class="mono-label" id="ledger-count"></span>
+      <div class="spacer"></div>
+      <button class="tbtn" id="btn-export">Export CSV</button>
+      <button class="tbtn" id="btn-clear">Clear All</button>
+      <button class="x" id="btn-close">&times;</button>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Team</th><th>Problem Statement</th><th>Future Card</th><th>Dealt At</th></tr>
+      </thead>
+      <tbody id="ledger-body"></tbody>
+    </table>
+    <div class="empty hidden" id="ledger-empty">No cards dealt yet.</div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <div class="wrap">
+    <span>PROJECT KERBEROS × AMRITA CYBER NATION</span>
+    <span>ROUND 03 · FUTURE CARD · HOUR 12</span>
+    <span>AMRITA VISHWA VIDYAPEETHAM, CHENNAI</span>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

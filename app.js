@@ -19,6 +19,33 @@ function save(){
 }
 const psById = (id) => PROBLEMS.find(p => p.id === id);
 
+// The artifact sandbox blocks window.confirm(), so confirmation is in-page.
+function ask(message, okLabel){
+  return new Promise(resolve => {
+    const el = document.createElement('div');
+    el.className = 'askbox open';
+    el.innerHTML = `
+      <div class="ask-panel">
+        <p class="ask-msg"></p>
+        <div class="ask-row">
+          <button class="btn ghost" data-a="no">Cancel</button>
+          <button class="btn" data-a="yes"></button>
+        </div>
+      </div>`;
+    el.querySelector('.ask-msg').textContent = message;
+    el.querySelector('[data-a="yes"]').textContent = okLabel || 'Confirm';
+    document.body.appendChild(el);
+
+    const done = (v) => { el.remove(); document.removeEventListener('keydown', onKey); resolve(v); };
+    const onKey = (e) => { if (e.key === 'Escape') done(false); };
+    el.querySelector('[data-a="no"]').addEventListener('click', () => done(false));
+    el.querySelector('[data-a="yes"]').addEventListener('click', () => done(true));
+    el.addEventListener('click', (e) => { if (e.target === el) done(false); });
+    document.addEventListener('keydown', onKey);
+    el.querySelector('[data-a="yes"]').focus();
+  });
+}
+
 function toast(msg){
   const t = $('#toast');
   t.textContent = msg;
@@ -151,15 +178,17 @@ function fillTeams(){
 }
 
 /* ---------------- SHUFFLE & DEAL ---------------- */
-function shuffleDeal(){
+async function shuffleDeal(){
   if (dealing || !currentPS) return;
   const team = $('#team-select').value;
   if (!team) return;
 
   if (assignments[team]){
     const a = assignments[team];
-    if (!confirm(`${team} already holds ${a.cardName} (${a.psId}).\n\nRe-deal and overwrite that assignment?`)) return;
+    const ok = await ask(`${team} already holds ${a.cardName} (${a.psId}). Re-deal and overwrite that assignment?`, 'Re-deal');
+    if (!ok) return;
   }
+  if (dealing) return;
 
   dealing = true;
   $('#btn-shuffle').disabled = true;
@@ -247,7 +276,7 @@ function renderLedger(){
   $('#ledger-count').textContent = `${done} OF ${TEAMS.length} DEALT`;
 
   $('#ledger-body').innerHTML = rows.map(({ team, a }) => {
-    if (!a) return `<tr><td class="tname">${escapeHtml(team)}</td><td class="none" colspan="3">— not dealt —</td></tr>`;
+    if (!a) return `<tr><td class="tname">${escapeHtml(team)}</td><td class="none" colspan="4">— not dealt —</td></tr>`;
     const p = psById(a.psId);
     const time = new Date(a.ts).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     return `<tr>
@@ -255,9 +284,25 @@ function renderLedger(){
       <td>${a.psId} · ${escapeHtml(p ? p.title : '')}</td>
       <td class="tcard">${escapeHtml(a.cardName)} <span style="color:var(--dim2);font-weight:400">${a.cardCode}</span></td>
       <td class="none">${time}</td>
+      <td class="undo-cell"><button class="undo" data-team="${escapeHtml(team)}" title="Clear this team's card">Undo</button></td>
     </tr>`;
   }).join('');
   $('#ledger-empty').classList.toggle('hidden', done > 0);
+
+  $$('#ledger-body .undo').forEach(b => b.addEventListener('click', () => clearTeam(b.dataset.team)));
+}
+
+async function clearTeam(team){
+  const a = assignments[team];
+  if (!a) return;
+  const ok = await ask(`Return ${a.cardName} (${a.psId}) to the deck and set ${team} back to undealt?`, 'Undo deal');
+  if (!ok) return;
+  delete assignments[team];
+  save();
+  renderLedger();
+  updateCount();
+  if (currentPS){ renderCards(currentPS); fillTeams(); $('#verdict').classList.remove('show'); }
+  toast(`${team} reset — card returned to the deck`);
 }
 
 function exportCSV(){
@@ -298,8 +343,11 @@ $('#btn-roster').addEventListener('click', () => { renderLedger(); $('#modal').c
 $('#btn-close').addEventListener('click', () => $('#modal').classList.remove('open'));
 $('#modal').addEventListener('click', (e) => { if (e.target.id === 'modal') $('#modal').classList.remove('open'); });
 $('#btn-export').addEventListener('click', exportCSV);
-$('#btn-clear').addEventListener('click', () => {
-  if (!confirm('Clear every Future Card assignment for all 35 teams? This cannot be undone.')) return;
+$('#btn-clear').addEventListener('click', async () => {
+  const n = Object.keys(assignments).length;
+  if (!n) { toast('Nothing to clear'); return; }
+  const ok = await ask(`Clear every Future Card assignment? ${n} team${n===1?'':'s'} will be reset to undealt.`, 'Clear all');
+  if (!ok) return;
   assignments = {};
   save();
   renderLedger();

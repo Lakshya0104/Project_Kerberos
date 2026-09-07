@@ -300,3 +300,26 @@ footer .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
   .dom-head .rt{margin-left:0;text-align:left;width:100%}
   th,td{padding-left:16px;padding-right:16px}
 }
+
+/* ---------- in-page confirm (window.confirm is blocked in the artifact sandbox) ---------- */
+.askbox{
+  position:fixed;inset:0;z-index:400;background:rgba(4,5,7,.82);backdrop-filter:blur(5px);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  animation:fade .18s ease;
+}
+.ask-panel{
+  background:var(--panel);border:1px solid var(--amber-d);max-width:460px;width:100%;
+  padding:28px;box-shadow:0 24px 70px rgba(0,0,0,.6);
+}
+.ask-msg{margin:0 0 24px;font-size:13px;line-height:1.75;color:var(--txt)}
+.ask-row{display:flex;gap:12px;justify-content:flex-end}
+.ask-row .btn{padding:11px 22px}
+
+.undo-cell{width:1%;white-space:nowrap;text-align:right}
+.undo{
+  background:transparent;border:1px solid var(--line2);color:var(--dim2);
+  padding:5px 12px;font-family:inherit;font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;
+  transition:.15s;
+}
+.undo:hover{border-color:var(--crimson);color:var(--crimson)}
+:focus-visible{outline:2px solid var(--amber);outline-offset:2px}

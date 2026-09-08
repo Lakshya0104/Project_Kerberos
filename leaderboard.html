@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kerberos Final Standings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#07080a; --panel:#0e1116; --panel2:#12161d;
+  --line:#1e2530; --line2:#2a3442;
+  --txt:#dfe5ee; --dim:#7c8899; --dim2:#55606f;
+  --amber:#ffb02e; --amber-d:#c97d00; --crimson:#ff3b30;
+  --gold:#ffcf5c; --silver:#c8d3e0; --bronze:#d08a4e;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--txt);font-family:var(--mono);
+  font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;
+  background-image:
+    radial-gradient(900px 480px at 50% -8%,rgba(255,207,92,.10),transparent 70%),
+    radial-gradient(700px 420px at 50% 105%,rgba(255,59,48,.05),transparent 70%);
+  background-attachment:fixed;
+}
+body::before{
+  content:'';position:fixed;inset:0;pointer-events:none;z-index:99;
+  background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);
+  opacity:.32;mix-blend-mode:multiply;
+}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ---- masthead ---- */
+header{padding:56px 0 10px;text-align:center}
+.crest{width:38px;height:38px;color:var(--amber);margin-bottom:20px}
+.eyebrow{
+  display:inline-block;border:1px solid var(--amber-d);color:var(--amber);
+  padding:5px 18px;font-size:10px;letter-spacing:.32em;margin-bottom:24px;
+  background:rgba(255,176,46,.06);
+}
+h1{
+  margin:0;font-size:clamp(38px,8vw,84px);line-height:.94;font-weight:800;letter-spacing:.05em;
+  background:linear-gradient(180deg,#fff 0%,var(--gold) 52%,var(--amber-d) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.sub{
+  margin:16px 0 0;font-size:clamp(10px,2vw,13px);letter-spacing:.46em;
+  color:var(--dim);text-transform:uppercase;
+}
+
+/* ---- podium ---- */
+.podium{
+  display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:20px;
+  align-items:end;margin:64px 0 12px;
+}
+.plinth{
+  position:relative;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));
+  padding:34px 22px 30px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
+}
+.plinth::before{content:'';position:absolute;left:0;right:0;top:0;height:2px}
+.p1{padding:52px 26px 46px}
+.p1::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.p2::before{background:linear-gradient(90deg,transparent,var(--silver),transparent)}
+.p3::before{background:linear-gradient(90deg,transparent,var(--bronze),transparent)}
+.p1{box-shadow:0 0 0 1px rgba(255,207,92,.28),0 0 70px rgba(255,207,92,.13),inset 0 0 60px rgba(255,207,92,.05)}
+.p2{box-shadow:inset 0 0 44px rgba(200,211,224,.035)}
+.p3{box-shadow:inset 0 0 44px rgba(208,138,78,.045)}
+
+.place{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase}
+.p1 .place{color:var(--gold)} .p2 .place{color:var(--silver)} .p3 .place{color:var(--bronze)}
+.medal{width:52px;height:52px}
+.p1 .medal{width:70px;height:70px}
+.rank-n{
+  font-size:56px;font-weight:800;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--line2);
+}
+.p1 .rank-n{font-size:74px;-webkit-text-stroke:1px rgba(255,207,92,.42)}
+.team{
+  font-weight:800;line-height:1.12;letter-spacing:.01em;overflow-wrap:anywhere;
+  text-wrap:balance;
+}
+.p1 .team{font-size:clamp(26px,4.6vw,46px);color:var(--gold);text-shadow:0 0 34px rgba(255,207,92,.35)}
+.p2 .team{font-size:clamp(19px,3vw,30px);color:var(--silver)}
+.p3 .team{font-size:clamp(19px,3vw,30px);color:var(--bronze)}
+.champ{
+  font-size:9px;letter-spacing:.32em;color:var(--dim2);border-top:1px solid var(--line);
+  padding-top:14px;width:100%;
+}
+
+/* ---- the rest ---- */
+.rest-head{
+  display:flex;align-items:center;gap:16px;margin:70px 0 24px;
+}
+.rest-head h2{margin:0;font-size:12px;letter-spacing:.32em;color:var(--amber);font-weight:600}
+.rest-head .ln{flex:1;height:1px;background:var(--line)}
+.rest-head .n{font-size:10px;letter-spacing:.24em;color:var(--dim2)}
+
+.rows{display:flex;flex-direction:column;gap:8px}
+.row{
+  display:flex;align-items:center;gap:22px;background:var(--panel);
+  border:1px solid var(--line);padding:17px 24px;transition:.15s;
+}
+.row:hover{border-color:var(--line2);background:var(--panel2)}
+.row .n{
+  font-size:17px;font-weight:700;color:var(--dim2);min-width:38px;
+  font-variant-numeric:tabular-nums;
+}
+.row .name{font-size:17px;font-weight:600;letter-spacing:.01em;overflow-wrap:anywhere}
+.row .tick{margin-left:auto;width:24px;height:1px;background:var(--line2);flex:none}
+
+footer{border-top:1px solid var(--line);margin-top:76px;padding:26px 0 50px}
+footer .wrap{
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+  font-size:10px;letter-spacing:.2em;color:var(--dim2);
+}
+@media(max-width:760px){
+  .podium{grid-template-columns:1fr;align-items:stretch;margin-top:44px}
+  .p1{order:-1}
+  .row{gap:14px;padding:14px 16px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="crest" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M32 6 L20 14 L20 26 Q20 34 32 40 Q44 34 44 26 L44 14 Z"/>
+      <path d="M14 20 L8 26 L8 34 Q8 40 14 44"/>
+      <path d="M50 20 L56 26 L56 34 Q56 40 50 44"/>
+      <path d="M32 40 L32 52"/><path d="M24 52 L40 52"/>
+      <circle cx="27" cy="22" r="1.8" fill="currentColor" stroke="none"/>
+      <circle cx="37" cy="22" r="1.8" fill="currentColor" stroke="none"/>
+    </g>
+  </symbol>
+  <symbol id="medal" viewBox="0 0 64 64">
+    <g fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M22 6 L30 26"/><path d="M42 6 L34 26"/>
+      <circle cx="32" cy="42" r="16"/>
+      <circle cx="32" cy="42" r="9" opacity=".45"/>
+    </g>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap">
+    <svg class="crest"><use href="#crest"/></svg>
+    <div class="eyebrow">// PROJECT KERBEROS · FINAL RESULT</div>
+    <h1>FINAL STANDINGS</h1>
+    <p class="sub">Top Fifteen</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="podium">
+    <div class="plinth p2">
+      <div class="place">Second</div>
+      <svg class="medal" style="color:var(--silver)"><use href="#medal"/></svg>
+      <div class="rank-n">02</div>
+      <div class="team">Claude-Coders</div>
+      <div class="champ">RUNNER-UP</div>
+    </div>
+
+    <div class="plinth p1">
+      <div class="place">First</div>
+      <svg class="medal" style="color:var(--gold)"><use href="#medal"/></svg>
+      <div class="rank-n">01</div>
+      <div class="team">Error 404</div>
+      <div class="champ">CHAMPIONS · PROJECT KERBEROS</div>
+    </div>
+
+    <div class="plinth p3">
+      <div class="place">Third</div>
+      <svg class="medal" style="color:var(--bronze)"><use href="#medal"/></svg>
+      <div class="rank-n">03</div>
+      <div class="team">RockHack</div>
+      <div class="champ">SECOND RUNNER-UP</div>
+    </div>
+  </section>
+
+  <div class="rest-head">
+    <h2>// RANKS 04 — 15</h2>
+    <div class="ln"></div>
+    <span class="n">TOP FIFTEEN</span>
+  </div>
+
+  <div class="rows">
+    <div class="row"><span class="n">04</span><span class="name">Code Crafters</span><span class="tick"></span></div>
+    <div class="row"><span class="n">05</span><span class="name">c0mrad3$.exe</span><span class="tick"></span></div>
+    <div class="row"><span class="n">06</span><span class="name">AxisLi</span><span class="tick"></span></div>
+    <div class="row"><span class="n">07</span><span class="name">Wayne Family</span><span class="tick"></span></div>
+    <div class="row"><span class="n">08</span><span class="name">Cyber Trix</span><span class="tick"></span></div>
+    <div class="row"><span class="n">09</span><span class="name">HexTech</span><span class="tick"></span></div>
+    <div class="row"><span class="n">10</span><span class="name">Trust Me Bro</span><span class="tick"></span></div>
+    <div class="row"><span class="n">11</span><span class="name">TRIVEX</span><span class="tick"></span></div>
+    <div class="row"><span class="n">12</span><span class="name">SYNORA</span><span class="tick"></span></div>
+    <div class="row"><span class="n">13</span><span class="name">Byte Circuit</span><span class="tick"></span></div>
+    <div class="row"><span class="n">14</span><span class="name">Naanga Naalu Peru</span><span class="tick"></span></div>
+    <div class="row"><span class="n">15</span><span class="name">Neonix</span><span class="tick"></span></div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>PROJECT KERBEROS × AMRITA CYBER NATION</span>
+    <span>24-HOUR CYBER HACKATHON</span>
+    <span>AMRITA VISHWA VIDYAPEETHAM, CHENNAI</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Kerberos Final Standings</title>
+<title>Kerberos Standings After Round 2</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -30,37 +30,37 @@ body::before{
   background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px);
   opacity:.32;mix-blend-mode:multiply;
 }
-.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 28px}
 
 /* ---- masthead ---- */
-header{padding:56px 0 10px;text-align:center}
-.crest{width:38px;height:38px;color:var(--amber);margin-bottom:20px}
+header{padding:22px 0 2px;text-align:center}
+.crest{width:26px;height:26px;color:var(--amber);margin-bottom:9px}
 .eyebrow{
   display:inline-block;border:1px solid var(--amber-d);color:var(--amber);
-  padding:5px 18px;font-size:10px;letter-spacing:.32em;margin-bottom:24px;
+  padding:4px 16px;font-size:9.5px;letter-spacing:.3em;margin-bottom:13px;
   background:rgba(255,176,46,.06);
 }
 h1{
-  margin:0;font-size:clamp(38px,8vw,84px);line-height:.94;font-weight:800;letter-spacing:.05em;
+  margin:0;font-size:clamp(30px,5vw,50px);line-height:.94;font-weight:800;letter-spacing:.05em;
   background:linear-gradient(180deg,#fff 0%,var(--gold) 52%,var(--amber-d) 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent;
 }
 .sub{
-  margin:16px 0 0;font-size:clamp(10px,2vw,13px);letter-spacing:.46em;
+  margin:10px 0 0;font-size:clamp(10px,2vw,13px);letter-spacing:.46em;
   color:var(--dim);text-transform:uppercase;
 }
 
 /* ---- podium ---- */
 .podium{
-  display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:20px;
-  align-items:end;margin:64px 0 12px;
+  display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:12px;
+  align-items:end;margin:0;
 }
 .plinth{
-  position:relative;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));
-  padding:34px 22px 30px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
+  gap:10px;position:relative;border:1px solid var(--line2);background:linear-gradient(180deg,var(--panel2),var(--panel));
+  padding:22px 12px 20px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;
 }
 .plinth::before{content:'';position:absolute;left:0;right:0;top:0;height:2px}
-.p1{padding:52px 26px 46px}
+.p1{padding:34px 16px 30px}
 .p1::before{background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .p2::before{background:linear-gradient(90deg,transparent,var(--silver),transparent)}
 .p3::before{background:linear-gradient(90deg,transparent,var(--bronze),transparent)}
@@ -70,51 +70,64 @@ h1{
 
 .place{font-size:9.5px;letter-spacing:.34em;text-transform:uppercase}
 .p1 .place{color:var(--gold)} .p2 .place{color:var(--silver)} .p3 .place{color:var(--bronze)}
-.medal{width:52px;height:52px}
-.p1 .medal{width:70px;height:70px}
+.medal{width:34px;height:34px}
+.p1 .medal{width:48px;height:48px}
 .rank-n{
-  font-size:56px;font-weight:800;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--line2);
+  font-size:34px;font-weight:800;line-height:.8;color:transparent;-webkit-text-stroke:1px var(--line2);
 }
-.p1 .rank-n{font-size:74px;-webkit-text-stroke:1px rgba(255,207,92,.42)}
+.p1 .rank-n{font-size:48px;-webkit-text-stroke:1px rgba(255,207,92,.42)}
 .team{
-  font-weight:800;line-height:1.12;letter-spacing:.01em;overflow-wrap:anywhere;
+  font-weight:800;line-height:1.12;letter-spacing:.01em;overflow-wrap:break-word;
   text-wrap:balance;
 }
-.p1 .team{font-size:clamp(26px,4.6vw,46px);color:var(--gold);text-shadow:0 0 34px rgba(255,207,92,.35)}
-.p2 .team{font-size:clamp(19px,3vw,30px);color:var(--silver)}
-.p3 .team{font-size:clamp(19px,3vw,30px);color:var(--bronze)}
+.p1 .team{font-size:clamp(22px,2.8vw,34px);color:var(--gold);text-shadow:0 0 34px rgba(255,207,92,.35)}
+.p2 .team{font-size:clamp(14px,1.5vw,19px);color:var(--silver)}
+.p3 .team{font-size:clamp(14px,1.5vw,19px);color:var(--bronze)}
 .champ{
-  font-size:9px;letter-spacing:.32em;color:var(--dim2);border-top:1px solid var(--line);
-  padding-top:14px;width:100%;
+  font-size:8.5px;letter-spacing:.32em;color:var(--dim2);border-top:1px solid var(--line);
+  padding-top:10px;width:100%;
 }
 
 /* ---- the rest ---- */
 .rest-head{
-  display:flex;align-items:center;gap:16px;margin:70px 0 24px;
+  display:flex;align-items:center;gap:14px;margin:0 0 12px;
 }
 .rest-head h2{margin:0;font-size:12px;letter-spacing:.32em;color:var(--amber);font-weight:600}
 .rest-head .ln{flex:1;height:1px;background:var(--line)}
 .rest-head .n{font-size:10px;letter-spacing:.24em;color:var(--dim2)}
 
-.rows{display:flex;flex-direction:column;gap:8px}
+.rows{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 10px;align-content:start}
 .row{
-  display:flex;align-items:center;gap:22px;background:var(--panel);
-  border:1px solid var(--line);padding:17px 24px;transition:.15s;
+  display:flex;align-items:center;gap:12px;background:var(--panel);
+  border:1px solid var(--line);padding:7px 16px;transition:.15s;
 }
 .row:hover{border-color:var(--line2);background:var(--panel2)}
 .row .n{
-  font-size:17px;font-weight:700;color:var(--dim2);min-width:38px;
+  font-size:14px;font-weight:700;color:var(--dim2);min-width:26px;
   font-variant-numeric:tabular-nums;
 }
-.row .name{font-size:17px;font-weight:600;letter-spacing:.01em;overflow-wrap:anywhere}
-.row .tick{margin-left:auto;width:24px;height:1px;background:var(--line2);flex:none}
+.row .name{font-size:15px;font-weight:600;letter-spacing:.01em;overflow-wrap:anywhere}
+.row .tick{margin-left:auto;width:14px;height:1px;background:var(--line2);flex:none}
 
-footer{border-top:1px solid var(--line);margin-top:76px;padding:26px 0 50px}
+footer{border-top:1px solid var(--line);margin-top:24px;padding:14px 0 18px}
 footer .wrap{
   display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
   font-size:10px;letter-spacing:.2em;color:var(--dim2);
 }
+/* Everything on one screen: podium left, chasing pack right. */
+.board{
+  display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
+  gap:36px;align-items:start;margin:26px 0 0;
+}
+.board .podium{margin:0}
+.board .rest-head{margin:0 0 14px}
+
+@media(max-width:1040px){
+  .board{grid-template-columns:1fr;gap:30px}
+  .board .rest-head{margin-top:8px}
+}
 @media(max-width:760px){
+  .rows{grid-template-columns:1fr}
   .podium{grid-template-columns:1fr;align-items:stretch;margin-top:44px}
   .p1{order:-1}
   .row{gap:14px;padding:14px 16px}
@@ -146,13 +159,14 @@ footer .wrap{
 <header>
   <div class="wrap">
     <svg class="crest"><use href="#crest"/></svg>
-    <div class="eyebrow">// PROJECT KERBEROS · FINAL RESULT</div>
-    <h1>FINAL STANDINGS</h1>
-    <p class="sub">Top Fifteen</p>
+    <div class="eyebrow">// PROJECT KERBEROS · AFTER ROUND 2</div>
+    <h1>STANDINGS</h1>
+    <p class="sub">After Round 2 &nbsp;·&nbsp; Top Fifteen</p>
   </div>
 </header>
 
 <main class="wrap">
+ <div class="board">
   <section class="podium">
     <div class="plinth p2">
       <div class="place">Second</div>
@@ -167,7 +181,7 @@ footer .wrap{
       <svg class="medal" style="color:var(--gold)"><use href="#medal"/></svg>
       <div class="rank-n">01</div>
       <div class="team">Error 404</div>
-      <div class="champ">CHAMPIONS · PROJECT KERBEROS</div>
+      <div class="champ">LEADING AFTER ROUND 2</div>
     </div>
 
     <div class="plinth p3">
@@ -179,10 +193,11 @@ footer .wrap{
     </div>
   </section>
 
+  <section class="rest">
   <div class="rest-head">
-    <h2>// RANKS 04 — 15</h2>
+    <h2>// THE CHASING PACK</h2>
     <div class="ln"></div>
-    <span class="n">TOP FIFTEEN</span>
+    <span class="n">RANKS 04 &ndash; 15</span>
   </div>
 
   <div class="rows">
@@ -199,6 +214,8 @@ footer .wrap{
     <div class="row"><span class="n">14</span><span class="name">Naanga Naalu Peru</span><span class="tick"></span></div>
     <div class="row"><span class="n">15</span><span class="name">Neonix</span><span class="tick"></span></div>
   </div>
+  </section>
+ </div>
 </main>
 
 <footer>
